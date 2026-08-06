@@ -1,12 +1,999 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Hello, World!</title>
-	</head>
-	<body>
-		<h1 id="heading">Hello, World!</h1>
-		<p>This page comes from a static asset stored at `public/index.html` as configured in `wrangler.jsonc`.</p>
-	</body>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUCOSA - Mbarara University Computing Students Association</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mucosa: {
+                            blue: '#0F266B',
+                            lightBlue: '#1E40AF',
+                            accentBlue: '#2563EB',
+                            sky: '#0EA5E9',
+                            yellow: '#F59E0B',
+                            lime: '#84CC16',
+                            cardBg: '#F8FAFC',
+                            dark: '#0A1535'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        hand: ['"Caveat"', 'cursive'],
+                        display: ['"Space Grotesk"', 'sans-serif']
+                    },
+                    backgroundImage: {
+                        'silk-pattern': 'radial-gradient(circle at 50% 50%, rgba(241, 245, 249, 0.8) 0%, rgba(255, 255, 255, 1) 100%)',
+                        'dots-pattern': 'radial-gradient(#0f266b 1.5px, transparent 1.5px)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-dots {
+            background-size: 16px 16px;
+            background-image: radial-gradient(rgba(15, 38, 107, 0.15) 1.5px, transparent 1.5px);
+        }
+        .wavy-line {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q 12.5 0, 25 10 T 50 10 T 75 10 T 100 10' fill='none' stroke='%20f266b' stroke-width='3'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+        }
+        .bell-bounce {
+            animation: bounce 3s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(8deg); }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-mucosa-blue selection:text-white min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Brand Logos -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <!-- MUST Crest Shield Placeholder -->
+                    <div class="w-11 h-11 rounded-full bg-gradient-to-br from-yellow-400 via-blue-600 to-green-600 p-0.5 shadow-md group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full bg-white rounded-full flex items-center justify-center p-1">
+                            <svg class="w-7 h-7 text-mucosa-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="h-8 w-px bg-slate-300 hidden sm:block"></div>
+
+                    <!-- MUCOSA Text & Symbol -->
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-extrabold text-2xl tracking-tight text-mucosa-blue">MUCOSA</span>
+                            <span class="w-2 h-2 rounded-full bg-mucosa-lime animate-pulse"></span>
+                        </div>
+                        <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 line-clamp-1">
+                            Mbarara University Computing Students Association
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center gap-8 font-semibold text-slate-700 text-sm">
+                    <a href="#about" class="hover:text-mucosa-blue transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-mucosa-blue hover:after:w-full after:transition-all">About</a>
+                    <a href="#aws-partnership" class="hover:text-mucosa-blue transition-colors flex items-center gap-1.5 py-1 text-amber-600 font-bold">
+                        <i class="fa-brands fa-aws text-base"></i> AWS Builder
+                    </a>
+                    <a href="#clubs" class="hover:text-mucosa-blue transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-mucosa-blue hover:after:w-full after:transition-all">Clubs & Community</a>
+                    <a href="#bulletin" class="hover:text-mucosa-blue transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-mucosa-blue hover:after:w-full after:transition-all">Announcements</a>
+                    <a href="#teaser" class="hover:text-mucosa-blue transition-colors relative py-1 text-mucosa-blue font-bold">What's Next</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <button onclick="openModal('general')" class="px-5 py-2.5 bg-mucosa-blue hover:bg-blue-900 text-white rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <span>Join MUCOSA</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Toggle Button -->
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold border-b border-slate-100">About MUCOSA</a>
+            <a href="#aws-partnership" onclick="toggleMobileMenu()" class="block py-2 text-amber-600 font-bold border-b border-slate-100"><i class="fa-brands fa-aws mr-2"></i>AWS Student Builder</a>
+            <a href="#clubs" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold border-b border-slate-100">Clubs & Specializations</a>
+            <a href="#bulletin" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold border-b border-slate-100">Monthly Bulletin</a>
+            <a href="#teaser" onclick="toggleMobileMenu()" class="block py-2 text-slate-700 font-semibold border-b border-slate-100">Events & Teasers</a>
+            <button onclick="toggleMobileMenu(); openModal('general')" class="w-full mt-2 py-3 bg-mucosa-blue text-white rounded-xl font-bold shadow-md">
+                Join MUCOSA Today
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- HERO SECTION (Inspired by Welcome to August & Welcome to MUST Flyers) -->
+        <section id="about" class="relative bg-gradient-to-b from-white via-slate-50 to-blue-50/40 py-12 lg:py-20 overflow-hidden">
+            <!-- Background Graphic Accents matching the flyer graphics -->
+            <div class="absolute top-10 left-6 w-32 h-32 bg-dots opacity-40 rounded-full pointer-events-none"></div>
+            <div class="absolute bottom-10 right-10 w-48 h-48 bg-dots opacity-30 rounded-full pointer-events-none"></div>
+            <div class="absolute -top-20 -right-20 w-96 h-96 bg-blue-100/60 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Hero Content -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        
+                        <!-- Welcome Badge -->
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 shadow-sm">
+                            <span class="font-hand text-xl text-mucosa-blue font-bold">Welcome to</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-mucosa-accentBlue bg-white px-2.5 py-0.5 rounded-full shadow-xs">MUST Computing Hub</span>
+                        </div>
+
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-mucosa-dark tracking-tight leading-none">
+                            Refining Systems, <br class="hidden sm:inline"/>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-mucosa-blue via-blue-700 to-mucosa-sky">
+                                Building Future Tech.
+                            </span>
+                        </h1>
+
+                        <p class="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                            Mbarara University Computing Students Association (MUCOSA) is the official student body empowering technology enthusiasts, developers, and innovators across MUST to refine their skills, build projects, and lead.
+                        </p>
+
+                        <!-- Key Pillars Grid (From "Welcome to MUST!" Flyer) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-left">
+                            <div class="flex items-start gap-3 p-3 rounded-xl bg-white/80 border border-slate-200/80 shadow-xs">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 font-bold">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xs text-slate-800">Connect with Peers</h4>
+                                    <p class="text-[11px] text-slate-500">Engage with like-minded student developers.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3 p-3 rounded-xl bg-white/80 border border-slate-200/80 shadow-xs">
+                                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 font-bold">
+                                    <i class="fa-solid fa-chalkboard-user"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xs text-slate-800">Inspiring Workshops</h4>
+                                    <p class="text-[11px] text-slate-500">Hands-on practical sessions & tech talks.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3 p-3 rounded-xl bg-white/80 border border-slate-200/80 shadow-xs">
+                                <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 font-bold">
+                                    <i class="fa-solid fa-laptop-code"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xs text-slate-800">Real-World Projects</h4>
+                                    <p class="text-[11px] text-slate-500">Collaborate on impactful open-source software.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3 p-3 rounded-xl bg-white/80 border border-slate-200/80 shadow-xs">
+                                <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 font-bold">
+                                    <i class="fa-solid fa-trophy"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xs text-slate-800">Leadership & Growth</h4>
+                                    <p class="text-[11px] text-slate-500">Unlock opportunities for hackathons & jobs.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA Actions -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                            <button onclick="openModal('general')" class="px-7 py-3.5 bg-mucosa-blue hover:bg-blue-900 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center gap-3">
+                                <i class="fa-solid fa-user-plus text-sm"></i>
+                                <span>Join A Club Today</span>
+                            </button>
+                            <a href="#aws-partnership" class="px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+                                <i class="fa-brands fa-aws text-lg"></i>
+                                <span>AWS Student Group</span>
+                            </a>
+                        </div>
+
+                        <!-- Social Handle Pill (Inspired by @mucosamust flyer footer) -->
+                        <div class="pt-4 flex items-center justify-center lg:justify-start gap-3 text-slate-500 text-sm">
+                            <span class="font-medium text-xs">Official Socials:</span>
+                            <div class="flex items-center gap-3 text-mucosa-blue">
+                                <a href="https://x.com/mucosamust" target="_blank" class="hover:text-black transition-colors" title="X (Twitter)"><i class="fa-brands fa-x-twitter text-base"></i></a>
+                                <a href="https://instagram.com/mucosamust" target="_blank" class="hover:text-pink-600 transition-colors" title="Instagram"><i class="fa-brands fa-instagram text-base"></i></a>
+                                <a href="https://linkedin.com/company/mucosamust" target="_blank" class="hover:text-blue-700 transition-colors" title="LinkedIn"><i class="fa-brands fa-linkedin text-base"></i></a>
+                                <a href="https://github.com/mucosamust" target="_blank" class="hover:text-slate-900 transition-colors" title="GitHub"><i class="fa-brands fa-github text-base"></i></a>
+                                <a href="https://tiktok.com/@mucosamust" target="_blank" class="hover:text-slate-900 transition-colors" title="TikTok"><i class="fa-brands fa-tiktok text-base"></i></a>
+                            </div>
+                            <span class="text-xs font-bold text-slate-600 bg-slate-200/70 px-2 py-0.5 rounded-md">@mucosamust</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Flyer Hero Card Showcase -->
+                    <div class="lg:col-span-5 relative flex justify-center">
+                        
+                        <!-- Main Card (Emulating the August 08 Banner Aesthetic) -->
+                        <div class="w-full max-w-sm sm:max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 relative overflow-hidden group">
+                            
+                            <!-- Semi Circle Dial Badge from Flyer 1 -->
+                            <div class="absolute -right-12 -top-12 w-48 h-48 rounded-full border-[14px] border-mucosa-blue/10 flex items-center justify-center pointer-events-none">
+                                <div class="w-32 h-32 rounded-full border-8 border-mucosa-blue/20"></div>
+                            </div>
+
+                            <!-- Floating Month Arc Badge -->
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-mucosa-lime"></div>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Current Focus</span>
+                                </div>
+                                <span class="text-xs font-extrabold text-mucosa-blue bg-blue-50 px-3 py-1 rounded-full">MUST Semester II</span>
+                            </div>
+
+                            <!-- Big Dynamic Text Block -->
+                            <div class="space-y-2 mb-6">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-hand text-3xl text-mucosa-blue font-bold">Welcome to</span>
+                                    <!-- Wavy decorative graphic -->
+                                    <div class="w-12 h-3 wavy-line opacity-70"></div>
+                                </div>
+                                <div class="flex items-baseline gap-3">
+                                    <h3 class="text-4xl sm:text-5xl font-extrabold text-mucosa-blue tracking-tight">AUGUST</h3>
+                                    <span class="text-4xl font-extrabold text-white bg-mucosa-blue px-3 py-1 rounded-2xl shadow-md">08</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/60 mb-6">
+                                <h4 class="font-bold text-mucosa-blue text-sm">Happy New Month & Semester Vision</h4>
+                                <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                                    "August is for refining our systems and ensuring they are fine-tuned for the upcoming semester. Let's build together!"
+                                </p>
+                            </div>
+
+                            <!-- Interactive Card Footer Switcher -->
+                            <div class="pt-2 flex items-center justify-between">
+                                <div class="flex -space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold border-2 border-white">JS</div>
+                                    <div class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold border-2 border-white">AWS</div>
+                                    <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold border-2 border-white">Py</div>
+                                    <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs font-bold border-2 border-white">+50</div>
+                                </div>
+                                <a href="#bulletin" class="text-xs font-bold text-mucosa-blue hover:underline flex items-center gap-1">
+                                    <span>View Archive</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <!-- Floating Badge Decorative Graphic -->
+                        <div class="absolute -bottom-6 -left-4 sm:left-2 bg-mucosa-blue text-white p-4 rounded-2xl shadow-xl border-2 border-white hidden sm:block max-w-[200px] transform -rotate-3 hover:rotate-0 transition-transform">
+                            <div class="text-[10px] text-amber-300 font-bold uppercase">Official Chapter</div>
+                            <div class="text-xs font-extrabold leading-tight">Mbarara University of Science & Technology</div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- AWS PARTNERSHIP SECTION (Inspired by Image 2 Flyer) -->
+        <section id="aws-partnership" class="py-16 bg-mucosa-dark text-white relative overflow-hidden">
+            <!-- AWS Logo Watermark Pattern -->
+            <div class="absolute inset-0 opacity-5 pointer-events-none flex flex-wrap gap-8 justify-around items-center p-10 select-none">
+                <span class="text-5xl font-bold">aws</span><span class="text-5xl font-bold">aws</span><span class="text-5xl font-bold">aws</span>
+                <span class="text-5xl font-bold">aws</span><span class="text-5xl font-bold">aws</span><span class="text-5xl font-bold">aws</span>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                
+                <!-- Section Header Arc -->
+                <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
+                    <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider border border-amber-500/30">
+                        <i class="fa-solid fa-handshake"></i>
+                        <span>New Partnership Announcement</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                        AWS Student Builder Group Mbarara
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        We are thrilled to announce the launch of the AWS Student Builder Group at MUST — a community created by students, for students, to take our tech game to the next level.
+                    </p>
+                </div>
+
+                <!-- Handshake Banner Card (Visual Replica of Flyer 2) -->
+                <div class="bg-gradient-to-br from-slate-900 via-mucosa-blue to-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-700/80 shadow-2xl relative">
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        
+                        <!-- Left MUCOSA + AWS Handshake Graphics -->
+                        <div class="lg:col-span-6 bg-white rounded-2xl p-6 sm:p-8 text-slate-900 shadow-xl flex flex-col sm:flex-row items-center justify-around gap-6 text-center">
+                            
+                            <!-- MUCOSA Box -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-2xl bg-blue-50 border-2 border-mucosa-blue flex items-center justify-center text-mucosa-blue mb-2 shadow-inner">
+                                    <i class="fa-solid fa-desktop text-3xl"></i>
+                                </div>
+                                <span class="font-black text-lg text-mucosa-blue tracking-wider">MUCOSA</span>
+                                <span class="text-[10px] text-slate-500 uppercase font-semibold">MUST Chapter</span>
+                            </div>
+
+                            <!-- Handshake Icon -->
+                            <div class="flex flex-col items-center justify-center text-amber-500">
+                                <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 text-xl font-bold shadow-md">
+                                    <i class="fa-solid fa-handshake"></i>
+                                </div>
+                                <span class="text-[10px] font-bold text-amber-600 mt-1 uppercase">Partnership</span>
+                            </div>
+
+                            <!-- AWS Box -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border-2 border-amber-500 flex items-center justify-center text-amber-600 mb-2 shadow-inner">
+                                    <i class="fa-brands fa-aws text-4xl"></i>
+                                </div>
+                                <span class="font-black text-lg text-slate-900">AWS</span>
+                                <span class="text-[10px] text-slate-500 uppercase font-semibold">Amazon Web Services</span>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Info & Cloud Tracks -->
+                        <div class="lg:col-span-6 space-y-6">
+                            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                                <span>What you get in the AWS Builder Group</span>
+                                <span class="text-amber-400">⚡</span>
+                            </h3>
+
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">✓</div>
+                                    <p class="text-sm text-slate-200"><strong class="text-white">AWS Cloud Credits:</strong> Hands-on access to deploy Cloudflare Workers, EC2, Lambda, S3 & Cloud DBs.</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">✓</div>
+                                    <p class="text-sm text-slate-200"><strong class="text-white">Certification Prep:</strong> AWS Certified Cloud Practitioner & Solutions Architect study cohorts.</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">✓</div>
+                                    <p class="text-sm text-slate-200"><strong class="text-white">Cloud Hackathons:</strong> Compete in regional AWS student innovation challenges.</p>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 flex flex-wrap items-center gap-4">
+                                <button onclick="openModal('aws')" class="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl shadow-lg transition-transform hover:-translate-y-0.5 flex items-center gap-2">
+                                    <i class="fa-brands fa-aws text-lg"></i>
+                                    <span>Join AWS Builder Group</span>
+                                </button>
+                                <a href="#clubs" class="text-xs font-semibold text-slate-300 hover:text-white underline">View all MUCOSA clubs</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CLUBS & SPECIALIZATIONS DIRECTORY (From Image 7 Flyer) -->
+        <section id="clubs" class="py-16 bg-slate-100/70 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-mucosa-blue font-hand text-2xl font-bold">
+                            <span>Join a Club Today!</span>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+                            MUCOSA Tech Specialization Tracks
+                        </h2>
+                        <p class="text-slate-600 text-sm max-w-xl mt-1">
+                            Feel free to join any of the clubs associated or in partnership with MUCOSA and create an impact while you learn.
+                        </p>
+                    </div>
+
+                    <!-- Interactive Track Filter -->
+                    <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
+                        <button onclick="filterClubs('all')" class="club-filter-btn active px-4 py-2 bg-mucosa-blue text-white rounded-xl text-xs font-bold shadow-xs whitespace-nowrap">All Tracks</button>
+                        <button onclick="filterClubs('cloud')" class="club-filter-btn px-4 py-2 bg-white text-slate-700 hover:bg-slate-200 rounded-xl text-xs font-bold shadow-xs whitespace-nowrap">Cloud & DevOps</button>
+                        <button onclick="filterClubs('ai')" class="club-filter-btn px-4 py-2 bg-white text-slate-700 hover:bg-slate-200 rounded-xl text-xs font-bold shadow-xs whitespace-nowrap">AI & Data</button>
+                        <button onclick="filterClubs('dev')" class="club-filter-btn px-4 py-2 bg-white text-slate-700 hover:bg-slate-200 rounded-xl text-xs font-bold shadow-xs whitespace-nowrap">Web & Mobile</button>
+                        <button onclick="filterClubs('cyber')" class="club-filter-btn px-4 py-2 bg-white text-slate-700 hover:bg-slate-200 rounded-xl text-xs font-bold shadow-xs whitespace-nowrap">Cybersecurity</button>
+                    </div>
+                </div>
+
+                <!-- Club Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="clubs-grid">
+                    
+                    <!-- Club 1: AWS Student Builder Group -->
+                    <div class="club-card cloud bg-white rounded-2xl p-6 shadow-md border border-slate-200 hover:shadow-xl transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-bold">
+                                    <i class="fa-brands fa-aws"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200">Featured Partner</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-mucosa-blue transition-colors">AWS Student Builder Group</h3>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                                Dedicated cloud computing track for mastering AWS services, Cloudflare Workers deployment, serverless architectures, and cloud certifications.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-slate-400">Meets: Wednesdays 4 PM</span>
+                            <button onclick="openModal('AWS Student Builder')" class="text-xs font-bold text-mucosa-blue hover:text-blue-800 flex items-center gap-1">
+                                <span>Join Club</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Club 2: AI & Machine Learning Community -->
+                    <div class="club-card ai bg-white rounded-2xl p-6 shadow-md border border-slate-200 hover:shadow-xl transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl font-bold">
+                                    <i class="fa-solid fa-brain"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-purple-50 text-purple-700 rounded-full border border-purple-200">Active Track</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-mucosa-blue transition-colors">MUST AI & Data Science Guild</h3>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                                Dive deep into Python, Machine Learning models, DeepMind research insights, NLP, and computer vision projects tailored for healthcare & agriculture.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-slate-400">Meets: Fridays 3 PM</span>
+                            <button onclick="openModal('MUST AI Guild')" class="text-xs font-bold text-mucosa-blue hover:text-blue-800 flex items-center gap-1">
+                                <span>Join Club</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Club 3: Web & Mobile Developers -->
+                    <div class="club-card dev bg-white rounded-2xl p-6 shadow-md border border-slate-200 hover:shadow-xl transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl font-bold">
+                                    <i class="fa-solid fa-code"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full border border-blue-200">High Demand</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-mucosa-blue transition-colors">Full-Stack Web & Mobile Devs</h3>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                                Learn modern front-end & back-end frameworks (Tailwind, React, Node.js, Flutter) to build production-ready web apps and mobile solutions.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-slate-400">Meets: Thursdays 5 PM</span>
+                            <button onclick="openModal('Full-Stack Web & Mobile')" class="text-xs font-bold text-mucosa-blue hover:text-blue-800 flex items-center gap-1">
+                                <span>Join Club</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Club 4: Cybersecurity & Ethical Hacking -->
+                    <div class="club-card cyber bg-white rounded-2xl p-6 shadow-md border border-slate-200 hover:shadow-xl transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-2xl font-bold">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-red-50 text-red-700 rounded-full border border-red-200">Security</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-mucosa-blue transition-colors">Cybersecurity & CTF Collective</h3>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                                Practice vulnerability analysis, network defense, Capture The Flag (CTF) competitions, and ethical hacking protocols.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-slate-400">Meets: Saturdays 10 AM</span>
+                            <button onclick="openModal('Cybersecurity & CTF')" class="text-xs font-bold text-mucosa-blue hover:text-blue-800 flex items-center gap-1">
+                                <span>Join Club</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Club 5: Open Source & Competitive Coding -->
+                    <div class="club-card dev bg-white rounded-2xl p-6 shadow-md border border-slate-200 hover:shadow-xl transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl font-bold">
+                                    <i class="fa-solid fa-terminal"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">Algorithms</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-mucosa-blue transition-colors">Open Source & Algorithms</h3>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                                Master Data Structures & Algorithms (DSA), Git/GitHub workflows, and prepare for international coding competitions & Google Summer of Code.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-slate-400">Meets: Tuesdays 4 PM</span>
+                            <button onclick="openModal('Open Source & Algorithms')" class="text-xs font-bold text-mucosa-blue hover:text-blue-800 flex items-center gap-1">
+                                <span>Join Club</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Club 6: Women in Computing (MUST Tech Ladies) -->
+                    <div class="club-card dev bg-white rounded-2xl p-6 shadow-md border border-slate-200 hover:shadow-xl transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-2xl font-bold">
+                                    <i class="fa-solid fa-female"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-pink-50 text-pink-700 rounded-full border border-pink-200">Empowerment</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-mucosa-blue transition-colors">MUCOSA Women in Tech</h3>
+                            <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                                Mentorship network, female tech leadership workshops, hackathon teams, and career acceleration for women in computing fields.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-slate-400">Meets: Bi-weekly Saturdays</span>
+                            <button onclick="openModal('Women in Tech')" class="text-xs font-bold text-mucosa-blue hover:text-blue-800 flex items-center gap-1">
+                                <span>Join Track</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MONTHLY BULLETIN & ANNOUNCEMENTS (Inspired by August, July, June, Martyrs Day Flyers) -->
+        <section id="bulletin" class="py-16 bg-white relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="font-hand text-2xl text-mucosa-blue font-bold">Official Communications</span>
+                    <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">MUCOSA Monthly Bulletin & Milestones</h2>
+                    <p class="text-slate-600 text-sm mt-1">Stay updated with official association announcements and seasonal messages.</p>
+                </div>
+
+                <!-- Interactive Tab Switcher -->
+                <div class="flex justify-center mb-8">
+                    <div class="inline-flex bg-slate-100 p-1 rounded-2xl border border-slate-200 gap-1 overflow-x-auto max-w-full">
+                        <button onclick="switchTab('august')" id="tab-august" class="tab-btn active font-bold text-xs px-5 py-2.5 rounded-xl bg-mucosa-blue text-white shadow-sm transition-all">August Update</button>
+                        <button onclick="switchTab('july')" id="tab-july" class="tab-btn font-bold text-xs px-5 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 transition-all">Hello July</button>
+                        <button onclick="switchTab('june')" id="tab-june" class="tab-btn font-bold text-xs px-5 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 transition-all">June Kickoff</button>
+                        <button onclick="switchTab('martyrs')" id="tab-martyrs" class="tab-btn font-bold text-xs px-5 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 transition-all">03 June Martyrs Day</button>
+                    </div>
+                </div>
+
+                <!-- Tab Content Card -->
+                <div class="max-w-4xl mx-auto">
+                    
+                    <!-- August Card (From Flyer 1) -->
+                    <div id="content-august" class="bulletin-content bg-gradient-to-br from-blue-50/50 via-white to-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                            <div class="md:col-span-4 text-center md:text-left">
+                                <div class="inline-block bg-mucosa-blue text-white text-xs font-extrabold uppercase px-3 py-1 rounded-full mb-2">Month Announcement</div>
+                                <h3 class="text-4xl font-black text-mucosa-blue">AUGUST 08</h3>
+                                <div class="font-hand text-2xl text-slate-600 font-bold mt-1">Happy New Month</div>
+                            </div>
+                            <div class="md:col-span-8 space-y-3 border-t md:border-t-0 md:border-l border-slate-200 pt-4 md:pt-0 md:pl-8">
+                                <h4 class="font-extrabold text-lg text-slate-900">New Month, New Vision</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">
+                                    "August is for refining our systems and ensuring they are fine-tuned for the upcoming semester. We invite all computing students to participate in system architecture workshops."
+                                </p>
+                                <div class="flex items-center gap-2 pt-2 text-xs font-bold text-mucosa-blue">
+                                    <i class="fa-solid fa-check-circle text-emerald-500"></i>
+                                    <span>Focus: Infrastructure & Student Portal Prep</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- July Card (From Flyer 5) -->
+                    <div id="content-july" class="bulletin-content hidden bg-gradient-to-br from-blue-50/50 via-white to-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                            <div class="md:col-span-4 text-center md:text-left">
+                                <span class="font-hand text-4xl text-mucosa-blue font-bold">Hello July</span>
+                                <h3 class="text-xl font-bold text-slate-700 mt-1">Happy New Month</h3>
+                            </div>
+                            <div class="md:col-span-8 space-y-3 border-t md:border-t-0 md:border-l border-slate-200 pt-4 md:pt-0 md:pl-8">
+                                <p class="text-slate-600 text-sm leading-relaxed italic">
+                                    "As we welcome the month of July, we extend our warmest wishes to you and your family. May this new month bring you peace, good health, renewed strength, and abundant blessings in all your endeavors."
+                                </p>
+                                <div class="text-xs text-slate-500 font-semibold">— MUCOSA Executive Committee</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- June Card (From Flyer 4) -->
+                    <div id="content-june" class="bulletin-content hidden bg-gradient-to-br from-blue-50/50 via-white to-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                            <div class="md:col-span-4 text-center md:text-left">
+                                <div class="w-20 h-20 bg-emerald-600 text-white rounded-2xl mx-auto md:mx-0 flex flex-col items-center justify-center font-bold shadow-md">
+                                    <span class="text-2xl">01</span>
+                                    <span class="text-xs uppercase">JUNE</span>
+                                </div>
+                            </div>
+                            <div class="md:col-span-8 space-y-3 border-t md:border-t-0 md:border-l border-slate-200 pt-4 md:pt-0 md:pl-8">
+                                <h4 class="font-extrabold text-lg text-slate-900">Welcome to June!</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">
+                                    "Wishing all students and staff a prosperous new month. Let's navigate this month together through innovation and collaborative coding sessions."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Martyrs Day Card (From Flyer 6) -->
+                    <div id="content-martyrs" class="bulletin-content hidden bg-gradient-to-br from-blue-50/50 via-white to-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                            <div class="md:col-span-4 text-center md:text-left">
+                                <div class="inline-block bg-slate-900 text-amber-400 font-black text-xs uppercase px-3 py-1 rounded-md mb-2">Uganda Public Holiday</div>
+                                <h3 class="text-3xl font-extrabold text-slate-900">03 JUNE</h3>
+                                <div class="font-bold text-mucosa-blue text-sm">Martyrs Day Commemoration</div>
+                            </div>
+                            <div class="md:col-span-8 space-y-3 border-t md:border-t-0 md:border-l border-slate-200 pt-4 md:pt-0 md:pl-8">
+                                <p class="text-slate-700 font-medium text-base italic">
+                                    "May this day always remind us to stand firm for what we believe in."
+                                </p>
+                                <p class="text-slate-500 text-xs">Honor, Resilience & Faith — MUCOSA Community Reflection.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- "SOMETHING BIG IS COMING" TEASER SECTION (Inspired by Image 3 Flyer) -->
+        <section id="teaser" class="py-16 bg-gradient-to-br from-mucosa-blue via-blue-900 to-slate-950 text-white relative overflow-hidden">
+            
+            <!-- Animated Floating Yellow Bells Visual (from flyer 3) -->
+            <div class="absolute top-8 left-12 text-amber-400 text-4xl bell-bounce opacity-80 pointer-events-none">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <div class="absolute bottom-10 right-16 text-amber-400 text-5xl bell-bounce opacity-70 pointer-events-none" style="animation-delay: 1.5s;">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-8">
+                
+                <div class="space-y-4">
+                    <p class="font-black text-2xl sm:text-3xl tracking-widest text-slate-200 uppercase">
+                        SOMETHING
+                    </p>
+                    
+                    <!-- Massive BIG Title with Floating "STAY TUNED" Pill -->
+                    <div class="relative inline-block my-2">
+                        <h2 class="text-7xl sm:text-9xl font-black text-white tracking-tighter leading-none select-none">
+                            BIG
+                        </h2>
+                        <!-- Pill Badge matching flyer #3 -->
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-mucosa-blue font-extrabold text-xs sm:text-base uppercase px-6 py-2 rounded-full shadow-2xl border-2 border-mucosa-blue whitespace-nowrap rotate-[-4deg]">
+                            ⚡ STAY TUNED
+                        </div>
+                    </div>
+
+                    <p class="font-black text-2xl sm:text-3xl tracking-widest text-slate-200 uppercase">
+                        IS COMING
+                    </p>
+                </div>
+
+                <p class="text-slate-300 text-sm sm:text-base max-w-xl mx-auto">
+                    MUST Annual Computing Summit & Hackathon 2026. Prepare your teams for the largest university innovation challenge in Western Uganda!
+                </p>
+
+                <!-- Live Interactive Countdown Timer -->
+                <div class="flex justify-center items-center gap-3 sm:gap-6 pt-4">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-5 border border-white/20 min-w-[70px] sm:min-w-[90px]">
+                        <span id="count-days" class="block text-2xl sm:text-4xl font-extrabold text-amber-400">14</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 uppercase font-semibold">Days</span>
+                    </div>
+                    <span class="text-2xl font-bold text-amber-400">:</span>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-5 border border-white/20 min-w-[70px] sm:min-w-[90px]">
+                        <span id="count-hours" class="block text-2xl sm:text-4xl font-extrabold text-white">08</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 uppercase font-semibold">Hours</span>
+                    </div>
+                    <span class="text-2xl font-bold text-amber-400">:</span>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-5 border border-white/20 min-w-[70px] sm:min-w-[90px]">
+                        <span id="count-mins" class="block text-2xl sm:text-4xl font-extrabold text-white">42</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 uppercase font-semibold">Mins</span>
+                    </div>
+                    <span class="text-2xl font-bold text-amber-400">:</span>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-5 border border-white/20 min-w-[70px] sm:min-w-[90px]">
+                        <span id="count-secs" class="block text-2xl sm:text-4xl font-extrabold text-white">19</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 uppercase font-semibold">Secs</span>
+                    </div>
+                </div>
+
+                <div class="pt-6">
+                    <button onclick="openModal('Hackathon Registration')" class="px-8 py-4 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 inline-flex items-center gap-3">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Get Notified First</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER (Exact handle reproduction: @mucosamust & www.mucosamust.com) -->
+    <footer class="bg-slate-950 text-slate-400 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                
+                <!-- Col 1: MUCOSA Info -->
+                <div class="md:col-span-2 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-mucosa-blue text-white flex items-center justify-center font-black text-sm">M</div>
+                        <span class="text-xl font-black text-white tracking-wider">MUCOSA</span>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
+                        Mbarara University Computing Students Association. Empowering technology students with practical skills, cloud innovations, and industry networking.
+                    </p>
+                    <div class="text-xs font-semibold text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-location-dot text-amber-400"></i>
+                        <span>Faculty of Computing & Informatics, MUST - Mbarara, Uganda</span>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div>
+                    <h4 class="text-white text-xs font-bold uppercase tracking-wider mb-3">Quick Navigation</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#about" class="hover:text-white transition-colors">About Association</a></li>
+                        <li><a href="#aws-partnership" class="hover:text-white transition-colors">AWS Builder Group</a></li>
+                        <li><a href="#clubs" class="hover:text-white transition-colors">Clubs & Tracks</a></li>
+                        <li><a href="#bulletin" class="hover:text-white transition-colors">Monthly Bulletins</a></li>
+                        <li><a href="#teaser" class="hover:text-white transition-colors">Upcoming Events</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Social & Handles -->
+                <div>
+                    <h4 class="text-white text-xs font-bold uppercase tracking-wider mb-3">Follow @mucosamust</h4>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <a href="https://x.com/mucosamust" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-mucosa-blue hover:text-white flex items-center justify-center transition-colors" title="X"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/mucosamust" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-pink-600 hover:text-white flex items-center justify-center transition-colors" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://linkedin.com/company/mucosamust" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-colors" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="https://github.com/mucosamust" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 hover:text-white flex items-center justify-center transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://tiktok.com/@mucosamust" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 hover:text-white flex items-center justify-center transition-colors" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                    <div class="text-xs text-slate-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-globe text-mucosa-sky"></i>
+                        <a href="https://www.mucosamust.com" target="_blank" class="text-slate-200 font-bold hover:underline">www.mucosamust.com</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright Bar -->
+            <div class="pt-6 border-t border-slate-900 text-center sm:flex sm:justify-between sm:text-left text-[11px] text-slate-500">
+                <p>&copy; 2026 MUCOSA. Mbarara University Computing Students Association. All rights reserved.</p>
+                <p class="mt-2 sm:mt-0">Deploys seamlessly on <span class="text-amber-400 font-semibold">Cloudflare Workers</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JOIN / REGISTRATION MODAL -->
+    <div id="registration-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative transform transition-all">
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="mb-6">
+                <div class="inline-block bg-blue-50 text-mucosa-blue text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full mb-1">
+                    Student Registration
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900" id="modal-title">Join MUCOSA</h3>
+                <p class="text-xs text-slate-500 mt-1">Connect with student developers & builder groups across MUST campus.</p>
+            </div>
+
+            <!-- Toast Message Notification -->
+            <div id="modal-toast" class="hidden p-3 rounded-xl bg-emerald-50 text-emerald-700 text-xs font-bold mb-4 border border-emerald-200">
+                🎉 Success! You're registered. We will send updates to your MUST student email.
+            </div>
+
+            <!-- Form -->
+            <form id="join-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+                    <input type="text" required placeholder="e.g. Mukasa David" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-mucosa-blue focus:outline-none"/>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">MUST Student Registration / Reg No.</label>
+                    <input type="text" required placeholder="2024/BCS/088/PS" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-mucosa-blue focus:outline-none"/>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
+                    <input type="email" required placeholder="student@std.must.ac.ug" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-mucosa-blue focus:outline-none"/>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Primary Club Interest</label>
+                    <select id="modal-club-select" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-mucosa-blue focus:outline-none bg-white">
+                        <option value="AWS Student Builder">AWS Student Builder Group</option>
+                        <option value="MUST AI Guild">MUST AI & Data Science Guild</option>
+                        <option value="Full-Stack Web & Mobile">Full-Stack Web & Mobile Devs</option>
+                        <option value="Cybersecurity & CTF">Cybersecurity & CTF Collective</option>
+                        <option value="Open Source & Algorithms">Open Source & Algorithms</option>
+                        <option value="Women in Tech">MUCOSA Women in Tech</option>
+                    </select>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3 bg-mucosa-blue hover:bg-blue-900 text-white font-bold text-sm rounded-xl shadow-md transition-all">
+                        Complete Registration
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.className = 'fa-solid fa-bars text-xl';
+            } else {
+                icon.className = 'fa-solid fa-xmark text-xl';
+            }
+        }
+
+        function filterClubs(category) {
+            const buttons = document.querySelectorAll('.club-filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-mucosa-blue', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+
+            event.target.classList.remove('bg-white', 'text-slate-700');
+            event.target.classList.add('bg-mucosa-blue', 'text-white');
+
+            const cards = document.querySelectorAll('.club-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-mucosa-blue', 'text-white', 'shadow-sm');
+                tab.classList.add('text-slate-600');
+            });
+
+            const selectedBtn = document.getElementById(`tab-${tabId}`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('bg-mucosa-blue', 'text-white', 'shadow-sm');
+                selectedBtn.classList.remove('text-slate-600');
+            }
+
+            const contents = document.querySelectorAll('.bulletin-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            const activeContent = document.getElementById(`content-${tabId}`);
+            if (activeContent) {
+                activeContent.classList.remove('hidden');
+            }
+        }
+
+        function openModal(trackName) {
+            const modal = document.getElementById('registration-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const clubSelect = document.getElementById('modal-club-select');
+
+            if (trackName && trackName !== 'general' && trackName !== 'aws') {
+                modalTitle.innerText = `Join ${trackName}`;
+                if (clubSelect) {
+                    for (let i = 0; i < clubSelect.options.length; i++) {
+                        if (clubSelect.options[i].value.toLowerCase().includes(trackName.toLowerCase())) {
+                            clubSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            } else if (trackName === 'aws') {
+                modalTitle.innerText = `Join AWS Student Builder Group`;
+                if (clubSelect) clubSelect.value = 'AWS Student Builder';
+            } else {
+                modalTitle.innerText = `Join MUCOSA Community`;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('registration-modal');
+            const toast = document.getElementById('modal-toast');
+            modal.classList.add('hidden');
+            if (toast) toast.classList.add('hidden');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const toast = document.getElementById('modal-toast');
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                closeModal();
+                document.getElementById('join-form').reset();
+            }, 2000);
+        }
+
+        function startCountdown() {
+            let secondsLeft = (14 * 86400) + (8 * 3600) + (42 * 60) + 19;
+            setInterval(() => {
+                if (secondsLeft <= 0) return;
+                secondsLeft--;
+                const d = Math.floor(secondsLeft / (3600 * 24));
+                const h = Math.floor((secondsLeft % (3600 * 24)) / 3600);
+                const m = Math.floor((secondsLeft % 3600) / 60);
+                const s = Math.floor(secondsLeft % 60);
+
+                document.getElementById('count-days').innerText = d.toString().padStart(2, '0');
+                document.getElementById('count-hours').innerText = h.toString().padStart(2, '0');
+                document.getElementById('count-mins').innerText = m.toString().padStart(2, '0');
+                document.getElementById('count-secs').innerText = s.toString().padStart(2, '0');
+            }, 1000);
+        }
+
+        window.onload = function() {
+            startCountdown();
+        };
+    </script>
+</body>
 </html>
